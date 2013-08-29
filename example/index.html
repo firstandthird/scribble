@@ -3,9 +3,40 @@
   <head>
     <meta charset="utf-8" />
     <title>scribble example</title>
+    <link rel="stylesheet" href="../lib/scribble.css"/>
   </head>
   <body>
+    <canvas id="test" width="500" height="500"></canvas>
 
+    <button id="undo">Undo</button>
+    <button id="redo">Redo</button>
+    <button id="eraser">Eraser</button>
+    <button id="pencil">Pencil</button>
+    <script src="../bower_components/jquery/jquery.min.js"></script>
+    <script src="../bower_components/fidel/dist/fidel.min.js"></script>
     <script src="../dist/scribble.js"></script>
+    <script>
+      (function(){
+        var scribble = $('#test').scribble(),
+            scribbleFidel = $('#test').data('scribble');
+
+        $('#undo').on('click',function(e){
+          e.preventDefault();
+          scribbleFidel.undo();
+        });
+        $('#redo').on('click',function(e){
+          e.preventDefault();
+          scribbleFidel.redo();
+        });
+        $('#eraser').on('click',function(e){
+          e.preventDefault();
+          scribbleFidel.changeTool('eraser');
+        });
+        $('#pencil').on('click',function(e){
+          e.preventDefault();
+          scribbleFidel.changeTool('pencil');
+        });
+      })()
+    </script>
   </body>
 </html>

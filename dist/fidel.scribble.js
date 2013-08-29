@@ -1,3 +1,10 @@
+/*!
+ * scribble - Turn a canvas element into a scribble pad
+ * v0.1.0
+ * https://github.com/firstandthird/scribble
+ * copyright First + Third 2013
+ * MIT License
+*/
 (function($){
   String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);

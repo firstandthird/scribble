@@ -1,0 +1,26 @@
+.scribble-canvas-holder {
+  border: 5px solid #343434;
+  border-radius: 4px;
+  position: relative;
+  width: 500px;
+  height: 500px;
+}
+.scribble-canvas-holder canvas {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: crosshair;
+}
+
+.scribble-main-canvas {
+  
+}
+
+.scribble-shadow-canvas {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
