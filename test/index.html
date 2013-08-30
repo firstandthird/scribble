@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>scribble Tests</title>
   <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+  <link rel="stylesheet" href="../lib/scribble.css" />
   <script src="../bower_components/assert/assert.js"></script>
   <script src="../node_modules/grunt-mocha/node_modules/mocha/mocha.js"></script>
   <!--<script src="../bower_components/blanket/dist/qunit/blanket.min.js" data-cover-adapter="../components/blanket/src/adapters/mocha-blanket.js"></script>-->
@@ -12,7 +13,8 @@
 <body>
   <div id="mocha"></div>
   <div id="fixture" style="display: none">
-
+    <canvas id="testCanvas"></canvas>
+    <div id="testDiv"></div>
   </div>
   <script src="../bower_components/jquery/jquery.js"></script>
   <script src="../bower_components/fidel/dist/fidel.js" data-cover></script>

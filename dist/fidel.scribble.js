@@ -6,9 +6,9 @@
  * MIT License
 */
 (function($){
-  String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-  };
+  function capitalize (string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   $.declare('scribble',{
     defaults : {
@@ -155,7 +155,16 @@
     _draw : function(){
       var length = this.points.length,
           aux = this.points[0],
-          context = this.erasing ? this.context : this.shadowContext;
+          erasing = aux.tool === 'eraser',
+          context =  erasing ? this.context : this.shadowContext,
+          previousTool = '',
+          revertTool = false;
+
+      if (this.tool !== aux.tool){
+        revertTool = true;
+        previousTool = this.tool;
+        this.changeTool(aux.tool);
+      }
 
       context.lineWidth = aux.size;
       context.strokeStyle = aux.color;
@@ -169,7 +178,7 @@
           context.closePath();
         }
         else {
-          if (!this.erasing){
+          if (!erasing){
             this._clearCanvas(this.shadowCanvas,this.shadowContext);
           }
 
@@ -186,6 +195,10 @@
           context.quadraticCurveTo(this.points[i].x,this.points[i].y,this.points[i+1].x,this.points[i+1].y);
           context.stroke();
         }
+      }
+
+      if (revertTool){
+        this.changeTool(previousTool);
       }
     },
     _drawFromSteps : function(actions){
@@ -228,7 +241,7 @@
       if (!this.readMode){
         this._bindEvents();
       }
-
+      this.oldColor = this.color;
       this.changeTool(this.tool);
     },
     changeColor: function(color){
@@ -282,18 +295,17 @@
     _setPencil : function(){
       this.context.globalCompositeOperation = 'source-over';
       this.color = this.oldColor;
-      this.erasing = false;
     },
     _setEraser : function(){
       this.context.globalCompositeOperation = 'destination-out';
       this.oldColor = this.color;
       this.color = 'rgba(0,0,0,1)';
-      this.erasing = true;
     },
     changeTool : function(tool){
       if (this.tools.indexOf(tool) !== -1){
-        var method = '_set' + tool.capitalize();
+        var method = '_set' + capitalize(tool);
         this[method].call(this);
+        this.tool = tool;
       }
       else {
         console.error(tool + ' is not implemented');
