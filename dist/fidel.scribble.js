@@ -57,6 +57,12 @@
 
       return id;
     },
+    _disableScroll : function(){
+      this.body.css('overflow','hidden');
+    },
+    _enableScroll : function(){
+      this.body.css('overflow','auto');
+    },
     _createWrapper : function(){
       var div = $('<div>');
       div.insertBefore(this.el);
@@ -99,6 +105,7 @@
     },
     _startDrawing : function(){
       this.shadowCanvas.on('mousemove touchmove', this.proxy(this._draw,this));
+      this._disableScroll();
       this.drawing = true;
       this._savePoint();
       this._draw();
@@ -126,6 +133,7 @@
       this.doneSteps.push(aux);
     },
     _stopDrawing : function(e){
+      this._enableScroll();
       if (this.drawing){
         e.stopImmediatePropagation();
         this.shadowCanvas.off('mousemove touchmove', this.proxy(this._draw,this));
@@ -234,6 +242,7 @@
       this._getContexts();
       
       this.shadowContext.lineJoin = 'round';
+      this.body = $('body');
 
       this.mousePosition = {
         x : 0,
@@ -277,9 +286,10 @@
     },
     loadJSON : function(obj){
       this._drawFromSteps(obj);
+      this.doneSteps = obj;
     },
     toDataURL : function(){
-      return this.el.toDataURL();
+      return this.el[0].toDataURL();
     },
     loadDataURL : function(dataurl){
       var image = new Image();
@@ -329,6 +339,7 @@
 
       if (!intern){
         this.emit('clear');
+        this.doneSteps = [];
       }
     }
   });
