@@ -197,9 +197,12 @@
         }
       }
 
-      if (revertTool){
-        this.changeTool(previousTool);
-      }
+      // Only used in undo / redo
+      return {
+        'toolUsed' : aux.tool,
+        'previousTool' : previousTool,
+        'revertTool' : revertTool
+      };
     },
     _drawFromSteps : function(actions){
       if (actions){
@@ -207,8 +210,14 @@
 
         for (var i = 0, len = actions.length; i < len; i++){
           this.points = actions[i].points;
-          this._draw();
-          this._copyShadowToReal();
+          var result = this._draw();
+
+          if (result.toolUsed !== 'eraser'){
+            this._copyShadowToReal();
+          }
+          if (result.revertTool){
+            this.changeTool(result.previousTool);
+          }
         }
       }
     },
@@ -236,7 +245,6 @@
       this.doneSteps = [];
 
       this.clear(true);
-      this.actions = [];
 
       if (!this.readMode){
         this._bindEvents();
