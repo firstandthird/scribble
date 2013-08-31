@@ -12,6 +12,7 @@
     <button id="redo">Redo</button>
     <button id="eraser">Eraser</button>
     <button id="pencil">Pencil</button>
+    <button id="console">Export JSON to console</button>
     <script src="../bower_components/jquery/jquery.min.js"></script>
     <script src="../bower_components/fidel/dist/fidel.min.js"></script>
     <script src="../dist/scribble.js"></script>
@@ -35,6 +36,11 @@
         $('#pencil').on('click',function(e){
           e.preventDefault();
           scribbleFidel.changeTool('pencil');
+        });
+        $('#console').on('click',function(e){
+          e.preventDefault();
+          console.log(scribbleFidel.toJSON());
+          console.log(JSON.stringify(scribbleFidel.toJSON()));
         });
       })()
     </script>
