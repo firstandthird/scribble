@@ -11,6 +11,9 @@
   margin: 0;
   padding: 0;
   cursor: crosshair;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 .scribble-main-canvas {
