@@ -1,6 +1,6 @@
 /*!
  * scribble - Turn a canvas element into a scribble pad
- * v0.1.0
+ * v0.0.1
  * https://github.com/firstandthird/scribble
  * copyright First + Third 2013
  * MIT License
