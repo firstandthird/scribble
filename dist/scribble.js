@@ -205,6 +205,7 @@
       color : '#000000',
       size : 2,
       readMode : false,
+      stopDrawingTime : 500,
       tool : 'pencil',
       cssClasses : {
         'canvas-holder' : 'scribble-canvas-holder',
@@ -326,7 +327,17 @@
         this.shadowCanvas.off('mousemove touchmove', this.proxy(this._draw,this));
         this._copyShadowToReal();
         this.drawing = false;
+        this._emitDrawingChanged();
       }
+    },
+    _emitDrawingChanged : function(){
+      if (this.stopTimer){
+        clearTimeout(this.stopTimer);
+      }
+      var self = this;
+      this.stopTimer = setTimeout(function(){
+        self.emit('drawing.changed');
+      }, this.stopDrawingTime);
     },
     _copyShadowToReal : function(){
       this.context.drawImage(this.shadowCanvas[0],0,0);
@@ -456,12 +467,10 @@
       this.changeTool(this.tool);
     },
     changeColor: function(color){
-      this.emit('colorchanged', [color,this.color]);
       this.color = color;
       this.shadowContext.strokeStyle = this.color;
     },
     changeSize : function(size){
-      this.emit('sizechanged', [size,this.size]);
       this.size = size;
       this.shadowContext.lineWidth = this.size;
     },

@@ -36,7 +36,7 @@ function movePoint(fidel,x,y){
 }
 
 suite('scribble', function() {
-  var canvas, div, canvasFidel;
+  var canvas, div, canvasFidel, scribble;
   var line1Mock = [{"points":[{"x":0,"y":0,"size":2,"color":"#000000","tool":"pencil"},{"x":0,"y":0,"size":2,"color":"#000000","tool":"pencil"},{"x":0,"y":0,"size":2,"color":"#000000","tool":"pencil"},{"x":1,"y":1,"size":2,"color":"#000000","tool":"pencil"},{"x":2,"y":2,"size":2,"color":"#000000","tool":"pencil"},{"x":3,"y":3,"size":2,"color":"#000000","tool":"pencil"},{"x":4,"y":4,"size":2,"color":"#000000","tool":"pencil"}]}];
 
   setup(function(){
@@ -112,7 +112,7 @@ suite('scribble', function() {
       setup(function(){
         cleanMess();
         canvas = $('#testCanvas');
-        canvas.scribble();
+        scribble = canvas.scribble();
         canvasFidel = canvas.data('scribble');
         drawLine1(canvasFidel);
       });
@@ -131,6 +131,11 @@ suite('scribble', function() {
       test('scribble should empty the canvas on clear',function(){
         canvasFidel.clear();
         assert.deepEqual(canvasFidel.toJSON(),[]);
+      });
+      test('scribble should fire an event when line was drawn', function(done){
+        scribble.on('drawing.changed',function(){
+          done();
+        });
       });
     });
     suite('exporting',function(){

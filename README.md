@@ -25,13 +25,14 @@ And that's it! Well, I lied a little. You have some methods and options availabl
 
 ### Available options
 
-| Option       | Explanation                             | Default     |
-| ------------ |:---------------------------------------:|:-----------:|
-| `color`      | Color in which you'll draw              | `#000000`   |
-| `size`       | Size of the stroke                      | `2`         |
-| `readMode`   | Sets whether the canvas is in read mode | `false`     |
-| `tool`       | Selected tool at beginning              | `pencil`    |
-| `cssClasses` | Object that holds css classes to style  | *See below* |
+| Option            | Explanation                             | Default     |
+| ----------------- |:---------------------------------------:|:-----------:|
+| `color`           | Color in which you'll draw              | `#000000`   |
+| `size`            | Size of the stroke                      | `2`         |
+| `readMode`        | Sets whether the canvas is in read mode | `false`     |
+| `tool`            | Selected tool at beginning              | `pencil`    |
+| `stopDrawingTime` | Time to debounce stop drawing           | `500`       |
+| `cssClasses`      | Object that holds css classes to style  | *See below* |
 
 `cssClasses` have this configurable properties:
 
@@ -75,6 +76,12 @@ This method allows you to change "drawing" tool. Currently there are only two po
 
 * `pencil` : This is the default value and is what you expect.
 * `eraser` : This is what you expect too… It will erase as you draw.
+
+### Fired events
+
+#### `drawing.changed`
+
+Whenever the user finished drawing, this event will fire. It's *debounced* so it won't fire until the time defined on the option `stopDrawingTime` passess without any more alike events.
 
 
 #### Export methods

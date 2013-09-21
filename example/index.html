@@ -44,6 +44,10 @@
           console.log(scribbleFidel.toJSON());
           console.log(JSON.stringify(scribbleFidel.toJSON()));
         });
+
+        scribble.on('drawing.changed',function(e){
+          console.log('Drawing has been changed');
+        });
       })()
     </script>
   </body>
