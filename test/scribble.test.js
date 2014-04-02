@@ -119,8 +119,6 @@ suite('scribble', function() {
         drawLine1(canvasFidel);
       });
       test('scribble should draw a line when user tries to',function(){
-        console.log(JSON.stringify(canvasFidel));
-        console.log(JSON.stringify(line1Mock));
         assert.deepEqual(canvasFidel.toJSON(),line1Mock);
       });
       test('scribble should undo the drawing when calling undo',function(){
