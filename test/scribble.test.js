@@ -19,10 +19,12 @@ function stopDrawing(fidel){
 
 function drawLine1(fidel){
   startDrawing(fidel,0,0);
-  for (var i = 0; i < 5; i++){
+
+  for (var i = 1; i < 5; i++){
     movePoint(fidel,i,i);
   }
   stopDrawing(fidel);
+
   return fidel.toJSON();
 }
 
@@ -37,7 +39,7 @@ function movePoint(fidel,x,y){
 
 suite('scribble', function() {
   var canvas, div, canvasFidel, scribble;
-  var line1Mock = [{"points":[{"x":0,"y":0,"size":2,"color":"#000000","tool":"pencil"},{"x":0,"y":0,"size":2,"color":"#000000","tool":"pencil"},{"x":0,"y":0,"size":2,"color":"#000000","tool":"pencil"},{"x":1,"y":1,"size":2,"color":"#000000","tool":"pencil"},{"x":2,"y":2,"size":2,"color":"#000000","tool":"pencil"},{"x":3,"y":3,"size":2,"color":"#000000","tool":"pencil"},{"x":4,"y":4,"size":2,"color":"#000000","tool":"pencil"}]}];
+  var line1Mock = [{"points":[{"x":0,"y":0,"size":2,"color":"#000000","tool":"pencil"},{"x":1,"y":1,"size":2,"color":"#000000","tool":"pencil"},{"x":2,"y":2,"size":2,"color":"#000000","tool":"pencil"},{"x":3,"y":3,"size":2,"color":"#000000","tool":"pencil"},{"x":4,"y":4,"size":2,"color":"#000000","tool":"pencil"}]}];
 
   setup(function(){
     cleanMess();
@@ -117,6 +119,8 @@ suite('scribble', function() {
         drawLine1(canvasFidel);
       });
       test('scribble should draw a line when user tries to',function(){
+        console.log(JSON.stringify(canvasFidel));
+        console.log(JSON.stringify(line1Mock));
         assert.deepEqual(canvasFidel.toJSON(),line1Mock);
       });
       test('scribble should undo the drawing when calling undo',function(){
