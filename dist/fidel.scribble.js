@@ -1,8 +1,8 @@
 /*!
  * scribble - Turn a canvas element into a scribble pad
- * v0.0.1
+ * v0.2.0
  * https://github.com/firstandthird/scribble
- * copyright First + Third 2013
+ * copyright First + Third 2014
  * MIT License
 */
 (function($){
@@ -99,11 +99,19 @@
       $('body').off('mouseup', this.proxy(this._stopDrawing,this));
     },
     _startDrawing : function(e){
-      this.shadowCanvas.on('mousemove touchmove', this.proxy(this._draw,this));
-      this.drawing = true;
-      this._saveMouse(e);
-      this._savePoint();
-      this._draw();
+      e.stopPropagation();
+      e.preventDefault();
+
+      if(e.handled !== true) {
+        this.shadowCanvas.on('mousemove touchmove', this.proxy(this._draw, this));
+        this.drawing = true;
+        this._saveMouse(e);
+        this._draw();
+        e.handled = true;
+      }
+      else {
+        return false;
+      }
     },
     _savePoint : function(){
       this.points.push({
@@ -120,6 +128,7 @@
       }
 
       var position = this._getXY(e);
+
       this.mousePosition.x = position.x;
       this.mousePosition.y = position.y;
 
@@ -169,6 +178,13 @@
 
       x = e.offsetX || e.layerX || touchEvent.pageX;
       y = e.offsetY || e.layerY || touchEvent.pageY;
+
+      if (e.type.indexOf('touch') !== -1){
+        var offset = this.shadowCanvas.offset();
+
+        x -= offset.left;
+        y -= offset.top;
+      }
 
       return {
         x : x,
@@ -252,10 +268,10 @@
         this._createWrapper();
       }
       this._createShadowCanvas();
-      
+
       this._applyClasses();
       this._getContexts();
-      
+
       this.shadowContext.lineJoin = 'round';
       this.body = $('body');
 
