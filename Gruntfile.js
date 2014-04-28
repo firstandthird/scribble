@@ -40,6 +40,7 @@ module.exports = function(grunt) {
       full: {
         src: [
           'dist/_bower.js',
+          'bower_components/hidpi-canvas/dist/hidpi-canvas.js',
           'lib/scribble.js'
         ],
         dest: 'dist/scribble.js'
