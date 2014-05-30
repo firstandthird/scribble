@@ -1,4 +1,11 @@
 
+0.3.0 / 2014-05-30 
+==================
+
+  * Adding retina canvas support
+  * New fullSteps feature that reduces the size of the points saved. Great if you are not changing tools, size and color on your scribble.
+  * The loadDataURL method now uses asynchronous loading of the image which solves an issue of images not loading on some browsers  
+
 0.2.0 / 2014-04-02 
 ==================
 

@@ -1,6 +1,6 @@
 /*!
  * scribble - Turn a canvas element into a scribble pad
- * v0.2.0
+ * v0.3.0
  * https://github.com/firstandthird/scribble
  * copyright First + Third 2014
  * MIT License
@@ -16,6 +16,7 @@
       size : 2,
       readMode : false,
       stopDrawingTime : 500,
+      fullSteps : true,
       tool : 'pencil',
       cssClasses : {
         'canvas-holder' : 'scribble-canvas-holder',
@@ -114,13 +115,18 @@
       }
     },
     _savePoint : function(){
-      this.points.push({
+      var point = {
         x : this.mousePosition.x,
-        y : this.mousePosition.y,
-        size : this.size,
-        color : this.color,
-        tool : this.tool
-      });
+        y : this.mousePosition.y
+      };
+
+      if (this.fullSteps){
+        point.size = this.size;
+        point.color = this.color;
+        point.tool = this.tool;
+      }
+
+      this.points.push(point);
     },
     _saveMouse : function(e){
       if (e.type === 'touchmove'){
@@ -199,15 +205,15 @@
           previousTool = '',
           revertTool = false;
 
-      if (this.tool !== aux.tool){
+      if (this.tool !== aux.tool && typeof aux.tool != "undefined"){
         revertTool = true;
         previousTool = this.tool;
         this.changeTool(aux.tool);
       }
 
-      context.lineWidth = aux.size;
-      context.strokeStyle = aux.color;
-      context.fillStyle = aux.color;
+      context.lineWidth = aux.size || this.size;
+      context.strokeStyle = aux.color || this.color;
+      context.fillStyle = aux.color || this.color;
 
       if (length !== 0){
         if (length < 3){
@@ -321,9 +327,14 @@
       return this.el[0].toDataURL();
     },
     loadDataURL : function(dataurl){
-      var image = new Image();
+      var image = new Image(),
+          context = this.context;
+
+      image.onload = function() {
+        context.drawImage(this, 0, 0);
+      };
+
       image.src = dataurl.toString();
-      this.context.drawImage(image,0,0);
     },
     undo : function(){
       if (this.doneSteps.length){
