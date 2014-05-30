@@ -139,6 +139,20 @@ suite('scribble', function() {
           done();
         });
       });
+      test('scribble should save simpler points if fullSteps is false', function () {
+        cleanMess();
+        canvas = $('#testCanvas');
+        scribble = canvas.scribble({ fullSteps : false });
+        canvasFidel = canvas.data('scribble');
+        drawLine1(canvasFidel);
+        var firstPoint = canvasFidel.toJSON()[0].points[0];
+
+        assert.ok(typeof firstPoint.color === "undefined");
+        assert.ok(typeof firstPoint.size === "undefined");
+        assert.ok(typeof firstPoint.tool === "undefined");
+        assert.ok(typeof firstPoint.x !== "undefined");
+        assert.ok(typeof firstPoint.y !== "undefined");
+      });
     });
     suite('exporting',function(){
       setup(function(){

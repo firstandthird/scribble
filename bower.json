@@ -1,7 +1,7 @@
 {
   "name": "scribble",
   "description": "Turn a canvas element into a scribble pad",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "homepage": "https://github.com/firstandthird/scribble",
   "license": "MIT",
   "copyright": "First + Third",
